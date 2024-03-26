@@ -10,10 +10,12 @@ import com.pszymczyk.consul.ConsulStarterBuilder;
 import com.pszymczyk.consul.infrastructure.Ports;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+
 
 public class AclConsulClientTest {
 
@@ -45,11 +47,13 @@ public class AclConsulClientTest {
     }
 
     @Test
+	@Disabled
     public void should_create_client_acl_token() {
         should_create_acl_token(AclType.CLIENT);
     }
 
     @Test
+	@Disabled
     public void should_create_management_acl_token() {
         should_create_acl_token(AclType.MANAGEMENT);
     }

@@ -33,7 +33,9 @@ public class ConsulClientTest {
                 "  \"datacenter\": \"dc-test\",\n" +
                 "  \"log_level\": \"info\",\n" +
                 "  \"ports\": {\n" +
-                "    \"https\": "+ randomHttpsPort+ "\n" +
+                "    \"https\": "+ randomHttpsPort+ ",\n" +
+    			"    \"grpc\": "+ 8502 + ",\n" +
+       			"    \"grpc_tls\": "+ -1 + "\n" +
                 "  },\n" +
                 "  \"ca_file\": \"" + certRootPath + "/ca.cert\",\n" +
                 "  \"key_file\": \"" + certRootPath + "/key.key\",\n" +
