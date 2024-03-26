@@ -15,7 +15,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-
+/*
+ see https://developer.hashicorp.com/consul/api-docs/v1.11.x/acl/tokens
+ the old acl API is deprecated and replaced with newer code,
+ for now this is not implemented
+ */
 
 public class AclConsulClientTest {
 
