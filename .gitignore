@@ -5,6 +5,7 @@
 # Gradle
 .gradle/
 build/
+target/
 out/
 
 # Special exception for my test main class used during development
