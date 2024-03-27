@@ -96,6 +96,7 @@ Response<List<HealthService>> healthyServices = client.getHealthServices("myapp"
 ```
 
 ## How to add consul-api into your project
+**currently this is source only , and you have to build/upload it to you own repository our use local copy !**
 ### Gradle
 ```
 compile "com.ecwid.consul:consul-api:1.5.0"
@@ -110,7 +111,6 @@ compile "com.ecwid.consul:consul-api:1.5.0"
 ```
 
 ## How to build from sources
-* Checkout the sources
-* ./gradlew build
+* maven 3.8 or better 
+* mvn clean install
 
-Gradle will compile sources, package classes (sources and javadocs too) into jars and run all tests. The build results will located in build/libs/ folder
