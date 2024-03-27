@@ -38,7 +38,7 @@ public class AclConsulClientTest {
                 ", \"datacenter\": \"dc-test\" }";
 
         consul = ConsulStarterBuilder.consulStarter()
-                .withConsulVersion(ConsulTestConstants.CONSUL_VERSION)
+                .withConsulVersion(ConsulTestConstants.CONSUL_LEGACY_VERSION)
                 .withHttpPort(port)
                 .withCustomConfig(customConfiguration)
                 .build()
@@ -51,13 +51,13 @@ public class AclConsulClientTest {
     }
 
     @Test
-	@Disabled
+	//@Disabled
     public void should_create_client_acl_token() {
         should_create_acl_token(AclType.CLIENT);
     }
 
     @Test
-	@Disabled
+	//@Disabled
     public void should_create_management_acl_token() {
         should_create_acl_token(AclType.MANAGEMENT);
     }

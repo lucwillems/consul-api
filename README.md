@@ -1,7 +1,33 @@
+About the fork
+==============
+
+currently (03/2024) all java based code for consul is not maintained. both Ecwid and consul-client
+libraries linked via consul site https://developer.hashicorp.com/consul/api-docs/libraries-and-sdks are
+not maintained anymore 😒
+
+**because the original repository is not maintained anymore, no reaction to fixes (both security and updates on consul)
+I can not guarantee that changes can be merged back into the original code.
+this will properly never happen because the current state of the repositories.
+I still appreciate the hard work done by all contributors on the original ecwid repository**
+
+- my main focus is spring boot 2.7,  so we maintain this in light of this usage
+- this fork has merged fix https://github.com/Ecwid/consul-api/issues/186 from ecwid
+- this fork updates dependencies 
+- this fork test against consul 1.17.0 instead of 1.6.0
+- is maintained for support on spring-boot environments 2.7.x , and later 3.x
+- build for JDK11, JDK17 (LTS) is planned 
+- it starts with version 1.5.0
+- use maven as build tool, gradle is a mess (my opinion)
+
+# todo :
+- prepare for spring-boot 3.x / JDK 17
+- support new ACL , legacy acl is still there but needs to be replaced
+- new package groupId, so I can publish it on maven repository. For now only source (?)
+- replace embedded-consul test with testcontainer based test as this project is also deprecated 😒
+
+ 
 consul-api
 ==========
-
-[![Build Status](https://api.travis-ci.org/Ecwid/consul-api.svg)](http://travis-ci.org/Ecwid/consul-api)
 
 Java client for Consul HTTP API (http://consul.io)
 
@@ -73,14 +99,14 @@ Response<List<HealthService>> healthyServices = client.getHealthServices("myapp"
 ## How to add consul-api into your project
 ### Gradle
 ```
-compile "com.ecwid.consul:consul-api:1.4.5"
+compile "com.ecwid.consul:consul-api:1.5.0"
 ```
 ### Maven
 ```
 <dependency>
   <groupId>com.ecwid.consul</groupId>
   <artifactId>consul-api</artifactId>
-  <version>1.4.5</version>
+  <version>1.5.0</version>
 </dependency>
 ```
 
