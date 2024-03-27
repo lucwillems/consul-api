@@ -14,7 +14,6 @@ I still appreciate the hard work done by all contributors on the original ecwid 
 - this fork has merged fix https://github.com/Ecwid/consul-api/issues/186 from ecwid
 - this fork updates dependencies 
 - this fork test against consul 1.17.0 instead of 1.6.0
-- is maintained for support on spring-boot environments 2.7.x , and later 3.x
 - build for JDK11, JDK17 (LTS) is planned 
 - it starts with version 1.5.0
 - use maven as build tool, gradle is a mess (my opinion)
