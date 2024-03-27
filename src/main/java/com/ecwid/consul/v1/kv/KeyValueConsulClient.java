@@ -280,8 +280,6 @@ public final class KeyValueConsulClient implements KeyValueClient {
 
 	@Override
 	public Response<Boolean> setKVValue(String key, String value, String token, PutParams putParams, QueryParams queryParams) {
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-
 		Request request = Request.Builder.newBuilder()
 			.setEndpoint("/v1/kv/" + key)
 			.setContent(value)

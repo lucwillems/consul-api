@@ -2,17 +2,12 @@ package com.ecwid.consul.v1.health;
 
 import com.ecwid.consul.ConsulRequest;
 import com.ecwid.consul.SingleUrlParameters;
-import com.ecwid.consul.v1.TagsParameters;
 import com.ecwid.consul.UrlParameters;
 import com.ecwid.consul.v1.NodeMetaParameters;
 import com.ecwid.consul.v1.QueryParams;
+import com.ecwid.consul.v1.TagsParameters;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public final class HealthServicesRequest implements ConsulRequest {
 
@@ -151,10 +146,6 @@ public final class HealthServicesRequest implements ConsulRequest {
 
 		if (queryParams != null) {
 			params.add(queryParams);
-		}
-
-		if (token != null) {
-			params.add(new SingleUrlParameters("token", token));
 		}
 
 		return params;

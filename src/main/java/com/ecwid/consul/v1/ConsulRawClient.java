@@ -125,15 +125,21 @@ public class ConsulRawClient {
 	}
 
 	public HttpResponse makeGetRequest(String endpoint, UrlParameters... urlParams) {
-		return makeGetRequest(endpoint, Arrays.asList(urlParams));
+		return makeGetRequest(endpoint, null,Arrays.asList(urlParams));
 	}
-
-	public HttpResponse makeGetRequest(String endpoint, List<UrlParameters> urlParams) {
+	public HttpResponse makeGetRequest(String endpoint, String token,UrlParameters... urlParams) {
+		return makeGetRequest(endpoint,token, Arrays.asList(urlParams));
+	}
+	public HttpResponse makeGetRequest(String endpoint,List<UrlParameters> urlParams) {
+		return makeGetRequest(endpoint,null,urlParams);
+	}
+	public HttpResponse makeGetRequest(String endpoint, String token,List<UrlParameters> urlParams) {
 		String url = prepareUrl(agentAddress + endpoint);
 		url = Utils.generateUrl(url, urlParams);
 
 		HttpRequest request = HttpRequest.Builder.newBuilder()
 			.setUrl(url)
+			.addHeaders(Utils.createTokenMap(token))
 			.build();
 
 		return httpTransport.makeGetRequest(request);
@@ -152,12 +158,18 @@ public class ConsulRawClient {
 	}
 
 	public HttpResponse makePutRequest(String endpoint, String content, UrlParameters... urlParams) {
+		return this.makePutRequest(endpoint,content,null,urlParams);
+	}
+
+	@Deprecated
+	public HttpResponse makePutRequest(String endpoint, String content, String token, UrlParameters... urlParams) {
 		String url = prepareUrl(agentAddress + endpoint);
 		url = Utils.generateUrl(url, urlParams);
 
 		HttpRequest request = HttpRequest.Builder.newBuilder()
 			.setUrl(url)
 			.setContent(content)
+			.addHeaders(Utils.createTokenMap(token))
 			.build();
 
 		return httpTransport.makePutRequest(request);
@@ -167,14 +179,12 @@ public class ConsulRawClient {
 		//,  String endpoint, byte[] binaryContent, UrlParameters... urlParams
 		String url = prepareUrl(agentAddress + request.getEndpoint());
 		url = Utils.generateUrl(url, request.getUrlParameters());
-
-		HttpRequest httpRequest = HttpRequest.Builder.newBuilder()
-			.setUrl(url)
-			.setContent(request.getContent()) // if content is not null then it has priority over binaryContent
-			.setBinaryContent(request.getBinaryContent())
-			.addHeaders(Utils.createTokenMap(request.getToken()))
-			.build();
-
+		HttpRequest.Builder builder = HttpRequest.Builder.newBuilder();
+		builder.setUrl(url)
+	           .setContent(request.getContent()) // if content is not null then it has priority over binaryContent
+			   .setBinaryContent(request.getBinaryContent())
+			   .addHeaders(Utils.createTokenMap(request.getToken()));
+		HttpRequest httpRequest = builder.build();
 		return httpTransport.makePutRequest(httpRequest);
 	}
 

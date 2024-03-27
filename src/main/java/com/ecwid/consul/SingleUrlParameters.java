@@ -31,6 +31,10 @@ public final class SingleUrlParameters implements UrlParameters {
 		}
 	}
 
+	public boolean isToken() {
+		return key.equalsIgnoreCase("token");
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {

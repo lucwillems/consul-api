@@ -823,7 +823,7 @@ public class ConsulClient implements
 
 	@Override
 	public Response<Session> getSessionInfo(String session, QueryParams queryParams, String token) {
-		return sessionClient.getSessionInfo(session, queryParams, token);
+		return sessionClient.getSessionInfo(session, queryParams);
 	}
 
 	@Override

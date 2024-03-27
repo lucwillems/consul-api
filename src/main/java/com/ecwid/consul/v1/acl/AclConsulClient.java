@@ -1,11 +1,6 @@
 package com.ecwid.consul.v1.acl;
 
-import java.util.List;
-import java.util.Map;
-
 import com.ecwid.consul.ConsulException;
-import com.ecwid.consul.SingleUrlParameters;
-import com.ecwid.consul.UrlParameters;
 import com.ecwid.consul.json.GsonFactory;
 import com.ecwid.consul.transport.HttpResponse;
 import com.ecwid.consul.transport.TLSConfig;
@@ -16,6 +11,9 @@ import com.ecwid.consul.v1.acl.model.Acl;
 import com.ecwid.consul.v1.acl.model.NewAcl;
 import com.ecwid.consul.v1.acl.model.UpdateAcl;
 import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Vasily Vasilkov (vgv@ecwid.com)
@@ -54,9 +52,8 @@ public final class AclConsulClient implements AclClient {
 
 	@Override
 	public Response<String> aclCreate(NewAcl newAcl, String token) {
-		UrlParameters tokenParams = token != null ? new SingleUrlParameters("token", token) : null;
 		String json = GsonFactory.getGson().toJson(newAcl);
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/acl/create", json, tokenParams);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/acl/create", json,token);
 
 		if (httpResponse.getStatusCode() == 200) {
 			Map<String, String> value = GsonFactory.getGson().fromJson(httpResponse.getContent(), new TypeToken<Map<String, String>>() {
@@ -69,9 +66,8 @@ public final class AclConsulClient implements AclClient {
 
 	@Override
 	public Response<Void> aclUpdate(UpdateAcl updateAcl, String token) {
-		UrlParameters tokenParams = token != null ? new SingleUrlParameters("token", token) : null;
 		String json = GsonFactory.getGson().toJson(updateAcl);
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/acl/update", json, tokenParams);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/acl/update", json, token);
 
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
@@ -82,8 +78,7 @@ public final class AclConsulClient implements AclClient {
 
 	@Override
 	public Response<Void> aclDestroy(String aclId, String token) {
-		UrlParameters tokenParams = token != null ? new SingleUrlParameters("token", token) : null;
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/acl/destroy/" + aclId, "", tokenParams);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/acl/destroy/" + aclId, "", token);
 
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
@@ -114,8 +109,7 @@ public final class AclConsulClient implements AclClient {
 
 	@Override
 	public Response<String> aclClone(String aclId, String token) {
-		UrlParameters tokenParams = token != null ? new SingleUrlParameters("token", token) : null;
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/acl/clone/" + aclId, "", tokenParams);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/acl/clone/" + aclId, "", token);
 
 		if (httpResponse.getStatusCode() == 200) {
 			Map<String, String> value = GsonFactory.getGson().fromJson(httpResponse.getContent(), new TypeToken<Map<String, String>>() {
@@ -128,8 +122,7 @@ public final class AclConsulClient implements AclClient {
 
 	@Override
 	public Response<List<Acl>> getAclList(String token) {
-		UrlParameters tokenParams = token != null ? new SingleUrlParameters("token", token) : null;
-		HttpResponse httpResponse = rawClient.makeGetRequest("/v1/acl/list", tokenParams);
+		HttpResponse httpResponse = rawClient.makeGetRequest("/v1/acl/list", token);
 
 		if (httpResponse.getStatusCode() == 200) {
 			List<Acl> value = GsonFactory.getGson().fromJson(httpResponse.getContent(), new TypeToken<List<Acl>>() {

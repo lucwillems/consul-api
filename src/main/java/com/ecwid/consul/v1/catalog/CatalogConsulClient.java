@@ -1,7 +1,5 @@
 package com.ecwid.consul.v1.catalog;
 
-import com.ecwid.consul.SingleUrlParameters;
-import com.ecwid.consul.UrlParameters;
 import com.ecwid.consul.json.GsonFactory;
 import com.ecwid.consul.transport.HttpResponse;
 import com.ecwid.consul.transport.TLSConfig;
@@ -55,9 +53,7 @@ public final class CatalogConsulClient implements CatalogClient {
 	@Override
 	public Response<Void> catalogRegister(CatalogRegistration catalogRegistration, String token) {
 		String json = GsonFactory.getGson().toJson(catalogRegistration);
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/catalog/register", json, tokenParam);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/catalog/register", json, token);
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
 		} else {
@@ -73,9 +69,12 @@ public final class CatalogConsulClient implements CatalogClient {
 	@Override
 	public Response<Void> catalogDeregister(CatalogDeregistration catalogDeregistration, String token) {
 		String json = GsonFactory.getGson().toJson(catalogDeregistration);
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/catalog/deregister", json, tokenParam);
+		Request request = Request.Builder.newBuilder()
+			.setEndpoint("/v1/catalog/deregister")
+			.setToken(token)
+			.setContent(json)
+			.build();
+		HttpResponse httpResponse = rawClient.makePutRequest(request);
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
 		} else {
@@ -85,6 +84,7 @@ public final class CatalogConsulClient implements CatalogClient {
 
 	@Override
 	public Response<List<String>> getCatalogDatacenters() {
+
 		HttpResponse httpResponse = rawClient.makeGetRequest("/v1/catalog/datacenters");
 
 		if (httpResponse.getStatusCode() == 200) {

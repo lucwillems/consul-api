@@ -41,6 +41,10 @@ public class Utils {
 		List<String> allParams = new ArrayList<String>();
 		for (UrlParameters item : params) {
 			if (item != null) {
+				//Guard for url based tokens
+				if (item instanceof  SingleUrlParameters && ((SingleUrlParameters) item).isToken()) {
+						throw new RuntimeException("token url parameter found for: " + baseUrl);
+				}
 				allParams.addAll(item.toUrlParameters());
 			}
 		}
@@ -60,7 +64,9 @@ public class Utils {
 
 	public static Map<String, String> createTokenMap(String token) {
 		Map<String, String> headers = new HashMap<>();
-		headers.put("X-Consul-Token", token);
+		if (token!=null) {
+			headers.put("X-Consul-Token", token);
+		}
 		return headers;
 	}
 

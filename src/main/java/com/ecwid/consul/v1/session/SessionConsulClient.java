@@ -1,12 +1,10 @@
 package com.ecwid.consul.v1.session;
 
 import com.ecwid.consul.ConsulException;
-import com.ecwid.consul.SingleUrlParameters;
-import com.ecwid.consul.UrlParameters;
 import com.ecwid.consul.json.GsonFactory;
-import com.ecwid.consul.v1.OperationException;
 import com.ecwid.consul.transport.HttpResponse;
 import com.ecwid.consul.v1.ConsulRawClient;
+import com.ecwid.consul.v1.OperationException;
 import com.ecwid.consul.v1.QueryParams;
 import com.ecwid.consul.v1.Response;
 import com.ecwid.consul.v1.session.model.NewSession;
@@ -46,10 +44,8 @@ public final class SessionConsulClient implements SessionClient {
 
 	@Override
 	public Response<String> sessionCreate(NewSession newSession, QueryParams queryParams, String token) {
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-
 		String json = GsonFactory.getGson().toJson(newSession);
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/session/create", json, queryParams, tokenParam);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/session/create", json, queryParams);
 
 		if (httpResponse.getStatusCode() == 200) {
 			Map<String, String> value = GsonFactory.getGson().fromJson(httpResponse.getContent(), new TypeToken<Map<String, String>>() {
@@ -67,8 +63,7 @@ public final class SessionConsulClient implements SessionClient {
 
 	@Override
 	public Response<Void> sessionDestroy(String session, QueryParams queryParams, String token) {
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/session/destroy/" + session, "", queryParams, tokenParam);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/session/destroy/" + session, "", queryParams);
 
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
@@ -84,8 +79,7 @@ public final class SessionConsulClient implements SessionClient {
 
 	@Override
 	public Response<Session> getSessionInfo(String session, QueryParams queryParams, String token) {
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-		HttpResponse httpResponse = rawClient.makeGetRequest("/v1/session/info/" + session, queryParams, tokenParam);
+		HttpResponse httpResponse = rawClient.makeGetRequest("/v1/session/info/" + session, queryParams);
 
 		if (httpResponse.getStatusCode() == 200) {
 			List<Session> value = GsonFactory.getGson().fromJson(httpResponse.getContent(), new TypeToken<List<Session>>() {
@@ -110,8 +104,7 @@ public final class SessionConsulClient implements SessionClient {
 
 	@Override
 	public Response<List<Session>> getSessionNode(String node, QueryParams queryParams, String token) {
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-		HttpResponse httpResponse = rawClient.makeGetRequest("/v1/session/node/" + node, queryParams, tokenParam);
+		HttpResponse httpResponse = rawClient.makeGetRequest("/v1/session/node/" + node, queryParams);
 
 		if (httpResponse.getStatusCode() == 200) {
 			List<Session> value = GsonFactory.getGson().fromJson(httpResponse.getContent(), new TypeToken<List<Session>>() {
@@ -128,9 +121,8 @@ public final class SessionConsulClient implements SessionClient {
 	}
 
 	@Override
-	public Response<List<Session>> getSessionList(QueryParams queryParams, String token) {
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-		HttpResponse httpResponse = rawClient.makeGetRequest("/v1/session/list", queryParams, tokenParam);
+	public Response<List<Session>> getSessionList(QueryParams queryParams,String token) {
+		HttpResponse httpResponse = rawClient.makeGetRequest("/v1/session/list", queryParams);
 
 		if (httpResponse.getStatusCode() == 200) {
 			List<Session> value = GsonFactory.getGson().fromJson(httpResponse.getContent(), new TypeToken<List<Session>>() {
@@ -147,8 +139,7 @@ public final class SessionConsulClient implements SessionClient {
 
 	@Override
 	public Response<Session> renewSession(String session, QueryParams queryParams, String token) {
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/session/renew/" + session, "", queryParams, tokenParam);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/session/renew/" + session, "", queryParams);
 
 		if (httpResponse.getStatusCode() == 200) {
 			List<Session> value = GsonFactory.getGson().fromJson(httpResponse.getContent(), new TypeToken<List<Session>>() {

@@ -96,9 +96,7 @@ public final class AgentConsulClient implements AgentClient {
 
 	@Override
 	public Response<Self> getAgentSelf(String token) {
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-
-		HttpResponse httpResponse = rawClient.makeGetRequest("/v1/agent/self", tokenParam);
+		HttpResponse httpResponse = rawClient.makeGetRequest("/v1/agent/self", token);
 
 		if (httpResponse.getStatusCode() == 200) {
 			Self self = GsonFactory.getGson().fromJson(httpResponse.getContent(), Self.class);
@@ -116,9 +114,9 @@ public final class AgentConsulClient implements AgentClient {
 	@Override
 	public Response<Void> agentSetMaintenance(boolean maintenanceEnabled, String reason) {
 		UrlParameters maintenanceParameter = new SingleUrlParameters("enable", Boolean.toString(maintenanceEnabled));
-		UrlParameters reasonParamenter = reason != null ? new SingleUrlParameters("reason", reason) : null;
+		UrlParameters reasonParameter = reason != null ? new SingleUrlParameters("reason", reason) : null;
 
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/maintenance", "", maintenanceParameter, reasonParamenter);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/maintenance", "", maintenanceParameter, reasonParameter);
 
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
@@ -158,10 +156,8 @@ public final class AgentConsulClient implements AgentClient {
 
 	@Override
 	public Response<Void> agentCheckRegister(NewCheck newCheck, String token) {
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-
 		String json = GsonFactory.getGson().toJson(newCheck);
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/check/register", json, tokenParam);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/check/register", json, token);
 
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
@@ -177,9 +173,7 @@ public final class AgentConsulClient implements AgentClient {
 
 	@Override
 	public Response<Void> agentCheckDeregister(String checkId, String token) {
-		UrlParameters tokenParameter = token != null ? new SingleUrlParameters("token", token) : null;
-
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/check/deregister/" + checkId, "", tokenParameter);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/check/deregister/" + checkId, "", token);
 
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
@@ -201,9 +195,7 @@ public final class AgentConsulClient implements AgentClient {
 	@Override
 	public Response<Void> agentCheckPass(String checkId, String note, String token) {
 		UrlParameters noteParameter = note != null ? new SingleUrlParameters("note", note) : null;
-		UrlParameters tokenParameter = token != null ? new SingleUrlParameters("token", token) : null;
-
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/check/pass/" + checkId, "", noteParameter, tokenParameter);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/check/pass/" + checkId, "", token , noteParameter);
     
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
@@ -225,9 +217,7 @@ public final class AgentConsulClient implements AgentClient {
 	@Override
 	public Response<Void> agentCheckWarn(String checkId, String note, String token) {
 		UrlParameters noteParameter = note != null ? new SingleUrlParameters("note", note) : null;
-		UrlParameters tokenParameter = token != null ? new SingleUrlParameters("token", token) : null;
-
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/check/warn/" + checkId, "", noteParameter, tokenParameter);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/check/warn/" + checkId, "",token,noteParameter);
 
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
@@ -249,9 +239,8 @@ public final class AgentConsulClient implements AgentClient {
 	@Override
 	public Response<Void> agentCheckFail(String checkId, String note, String token) {
 		UrlParameters noteParameter = note != null ? new SingleUrlParameters("note", note) : null;
-		UrlParameters tokenParameter = token != null ? new SingleUrlParameters("token", token) : null;
 
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/check/fail/" + checkId, "", noteParameter, tokenParameter);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/check/fail/" + checkId, "", token, noteParameter);
 
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
@@ -267,10 +256,9 @@ public final class AgentConsulClient implements AgentClient {
 
 	@Override
 	public Response<Void> agentServiceRegister(NewService newService, String token) {
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
 
 		String json = GsonFactory.getGson().toJson(newService);
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/service/register", json, tokenParam);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/service/register", json,token);
 
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
@@ -286,9 +274,7 @@ public final class AgentConsulClient implements AgentClient {
 
 	@Override
 	public Response<Void> agentServiceDeregister(String serviceId, String token) {
-		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
-
-		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/service/deregister/" + serviceId, "", tokenParam);
+		HttpResponse httpResponse = rawClient.makePutRequest("/v1/agent/service/deregister/" + serviceId, "", token);
 
 		if (httpResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, httpResponse);
