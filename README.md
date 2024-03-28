@@ -1,5 +1,7 @@
 About the fork
 ==============
+this fork is based on original https://github.com/Ecwid/consul-api , all copyrights are preserved as provided and included 
+Apache License Version 2.0 license
 
 currently (03/2024) all java based code for consul is not maintained. both Ecwid and consul-client
 libraries linked via consul site https://developer.hashicorp.com/consul/api-docs/libraries-and-sdks are
