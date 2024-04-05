@@ -6,6 +6,7 @@
 - build for JDK11 LTS
 - test against consul 1.17.0
 - legacy ACL api works only upto consul 1.10.12 and is not supported for 1.11 and higher !
+- start signing code commits with ID=C940BA18FCC143AC09E9D7DDF32987E25E478B70, available @ keys.openpgp.org
 
 1.4.5: 2020-04-29
 - last public release on mvn repository site, from
