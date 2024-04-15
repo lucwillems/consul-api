@@ -1,6 +1,8 @@
 # IntelliJ IDEA
 .idea/
 *.iml
+# maven version plugin
+pom.xml.versionsBackup
 
 # Gradle
 .gradle/
