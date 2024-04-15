@@ -111,7 +111,26 @@ compile "com.ecwid.consul:consul-api:1.5.0"
   <version>1.5.0</version>
 </dependency>
 ```
-
+## spring cloud usage, override default 1.4.x dependency
+```xml
+  <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- use forked version to fix issues -->
+            <dependency>
+                <groupId>com.ecwid.consul</groupId>
+                <artifactId>consul-api</artifactId>
+                <version>1.5.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+```    
 ## How to build from sources
 * maven 3.8 or better 
 * mvn clean install
